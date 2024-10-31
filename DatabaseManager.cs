@@ -12,8 +12,16 @@ namespace Lift_System
     {
         string connectionString = @"Server = LAPTOP-CD92AG1V; Database = lift_system; Trusted_Connection = True";
 
-        
 
+        public void logEvents(string message, DataTable dt, DataGridView DataTable)
+        {
+            string currentTime = DateTime.Now.ToString("hh:mm:ss");
+
+            dt.Rows.Add(currentTime, message);
+            DataTable.Rows.Add(currentTime, message);
+
+            InsertLoginIntoDB(dt);
+        }
         public void InsertLoginIntoDB(DataTable dt)
         {
             try
@@ -38,7 +46,6 @@ namespace Lift_System
             }
 
         }
-
         public void loadLogsFromDB(DataTable dt, DataGridView DataTable)
         {
             try
@@ -69,7 +76,6 @@ namespace Lift_System
                 MessageBox.Show("Error loading logs From DB: " + ex.Message);
             }
         }
-
         public void DeleteLogsFromDB(DataTable dt)
         {
             try
