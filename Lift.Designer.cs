@@ -45,6 +45,9 @@
             UpLeft_door = new PictureBox();
             DataTable = new DataGridView();
             DeleteButton = new Button();
+            panel5 = new Panel();
+            button1 = new Button();
+            button2 = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Main_lift).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DownLeft_door).BeginInit();
@@ -59,12 +62,13 @@
             panel1.BackColor = Color.DimGray;
             panel1.BackgroundImage = (Image)resources.GetObject("panel1.BackgroundImage");
             panel1.BackgroundImageLayout = ImageLayout.Stretch;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(floorDisplayLabel);
             panel1.Controls.Add(Door_close);
             panel1.Controls.Add(Door_open);
             panel1.Controls.Add(Down_Button);
             panel1.Controls.Add(Up_button);
-            panel1.Location = new Point(421, 35);
+            panel1.Location = new Point(451, 35);
             panel1.Name = "panel1";
             panel1.Size = new Size(227, 391);
             panel1.TabIndex = 0;
@@ -138,7 +142,7 @@
             // Main_lift
             // 
             Main_lift.Image = (Image)resources.GetObject("Main_lift.Image");
-            Main_lift.Location = new Point(85, 380);
+            Main_lift.Location = new Point(80, 404);
             Main_lift.Name = "Main_lift";
             Main_lift.Size = new Size(142, 169);
             Main_lift.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -156,9 +160,9 @@
             // DownLeft_door
             // 
             DownLeft_door.Image = (Image)resources.GetObject("DownLeft_door.Image");
-            DownLeft_door.Location = new Point(85, 380);
+            DownLeft_door.Location = new Point(66, 404);
             DownLeft_door.Name = "DownLeft_door";
-            DownLeft_door.Size = new Size(77, 169);
+            DownLeft_door.Size = new Size(87, 169);
             DownLeft_door.SizeMode = PictureBoxSizeMode.StretchImage;
             DownLeft_door.TabIndex = 7;
             DownLeft_door.TabStop = false;
@@ -166,9 +170,9 @@
             // DownRight_door
             // 
             DownRight_door.Image = (Image)resources.GetObject("DownRight_door.Image");
-            DownRight_door.Location = new Point(156, 380);
+            DownRight_door.Location = new Point(150, 404);
             DownRight_door.Name = "DownRight_door";
-            DownRight_door.Size = new Size(71, 169);
+            DownRight_door.Size = new Size(87, 169);
             DownRight_door.SizeMode = PictureBoxSizeMode.StretchImage;
             DownRight_door.TabIndex = 8;
             DownRight_door.TabStop = false;
@@ -176,9 +180,9 @@
             // UpRight_door
             // 
             UpRight_door.Image = (Image)resources.GetObject("UpRight_door.Image");
-            UpRight_door.Location = new Point(156, 2);
+            UpRight_door.Location = new Point(150, 0);
             UpRight_door.Name = "UpRight_door";
-            UpRight_door.Size = new Size(71, 168);
+            UpRight_door.Size = new Size(87, 169);
             UpRight_door.SizeMode = PictureBoxSizeMode.StretchImage;
             UpRight_door.TabIndex = 10;
             UpRight_door.TabStop = false;
@@ -186,9 +190,9 @@
             // UpLeft_door
             // 
             UpLeft_door.Image = (Image)resources.GetObject("UpLeft_door.Image");
-            UpLeft_door.Location = new Point(85, 2);
+            UpLeft_door.Location = new Point(66, 0);
             UpLeft_door.Name = "UpLeft_door";
-            UpLeft_door.Size = new Size(77, 168);
+            UpLeft_door.Size = new Size(87, 169);
             UpLeft_door.SizeMode = PictureBoxSizeMode.StretchImage;
             UpLeft_door.TabIndex = 9;
             UpLeft_door.TabStop = false;
@@ -198,18 +202,17 @@
             DataTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             DataTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DataTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataTable.Location = new Point(781, 35);
+            DataTable.Location = new Point(799, 35);
             DataTable.Name = "DataTable";
             DataTable.RowHeadersWidth = 51;
-            DataTable.Size = new Size(330, 481);
+            DataTable.Size = new Size(338, 501);
             DataTable.TabIndex = 11;
-            //DataTable.CellContentClick += DataTable_CellContentClick;
             // 
             // DeleteButton
             // 
             DeleteButton.BackColor = Color.Tomato;
             DeleteButton.ForeColor = SystemColors.ButtonFace;
-            DeleteButton.Location = new Point(681, 380);
+            DeleteButton.Location = new Point(699, 464);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.Size = new Size(94, 37);
             DeleteButton.TabIndex = 12;
@@ -217,11 +220,48 @@
             DeleteButton.UseVisualStyleBackColor = false;
             DeleteButton.Click += DeleteButton_Click;
             // 
+            // panel5
+            // 
+            panel5.BackColor = SystemColors.ActiveCaptionText;
+            panel5.BackgroundImage = (Image)resources.GetObject("panel5.BackgroundImage");
+            panel5.BackgroundImageLayout = ImageLayout.Stretch;
+            panel5.Location = new Point(333, 76);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(0, 0);
+            panel5.TabIndex = 17;
+            // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ActiveCaptionText;
+            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
+            button1.BackgroundImageLayout = ImageLayout.Stretch;
+            button1.Location = new Point(333, 111);
+            button1.Name = "button1";
+            button1.Size = new Size(38, 41);
+            button1.TabIndex = 19;
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.BackColor = SystemColors.ActiveCaptionText;
+            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
+            button2.BackgroundImageLayout = ImageLayout.Stretch;
+            button2.Location = new Point(333, 459);
+            button2.Name = "button2";
+            button2.Size = new Size(38, 41);
+            button2.TabIndex = 20;
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+            // 
             // Lift
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1154, 553);
+            ClientSize = new Size(1162, 573);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(panel5);
             Controls.Add(DeleteButton);
             Controls.Add(DataTable);
             Controls.Add(UpRight_door);
@@ -263,5 +303,8 @@
         private DataGridView DataTable;
         private Button DeleteButton;
         private Label floorDisplayLabel;
+        private Panel panel5;
+        private Button button1;
+        private Button button2;
     }
 }

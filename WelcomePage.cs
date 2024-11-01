@@ -25,18 +25,24 @@ namespace Lift_System
             {
                 progressBar.Value += 1;
                 loading.Text = progressBar.Value.ToString() + "%";
-                if (loading.Text == "100%")
-                {
-                    Lift lift = new Lift();
-                    lift.Show();
-                    this.Hide();
-                }
             }
             else
             {
                 timer1.Stop();
+                loading.Text = "100%"; // Ensure text is updated
+                Task.Delay(100).ContinueWith(_ => // Small delay for UI to update
+                {
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        Lift lift = new Lift();
+                        lift.Show();
+                        this.Hide();
+                    }));
+                });
             }
         }
+
+
         private void WelcomePage_Load(object sender, EventArgs e)
         {
             timer1.Interval = 20;

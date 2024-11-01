@@ -30,7 +30,7 @@ namespace Lift_System
         int current_floor = 0;
 
         int doorMaxOpenWidth;
-        
+
         DatabaseManager dbManager = new DatabaseManager();
         DataTable dt = new DataTable();
         public Lift()
@@ -72,10 +72,16 @@ namespace Lift_System
 
         private void Lift_Load(object sender, EventArgs e)
         {
-            dbManager.loadLogsFromDB(dt, DataTable);
+            //dbManager.loadLogsFromDB(dt, DataTable);
+            dbManager.LoadLogsAsync(dt, DataTable);
         }
 
-        private void Up_button_Click(object sender, EventArgs e)
+
+
+
+        // This is for button cick functions 
+
+        private void LiftUp()
         {
             Door_close_Click(null, null);
             isMovingUp = true;
@@ -86,7 +92,8 @@ namespace Lift_System
             OnLiftEvent?.Invoke("Lift Going Up");
         }
 
-        private void Down_Button_Click(object sender, EventArgs e)
+
+        private void LiftDown()
         {
             Door_close_Click(null, null);
             isMovingDown = true;
@@ -95,6 +102,18 @@ namespace Lift_System
             Up_button.Enabled = false;
             //dbManager.logEvents("Lift Going Down", dt, DataTable);
             OnLiftEvent?.Invoke("Lift Going Down");
+        }
+
+
+
+        private void Up_button_Click(object sender, EventArgs e)
+        {
+            LiftUp();
+        }
+
+        private void Down_Button_Click(object sender, EventArgs e)
+        {
+            LiftDown();
 
         }
 
@@ -169,8 +188,8 @@ namespace Lift_System
                 // Ground floor doors
                 if (isOpening)
                 {
-                    // Open the doors
-                    if (DownLeft_door.Left > doorMaxOpenWidth / 2)
+                    // Open the doors DownLeft_door.Left > doorMaxOpenWidth / 2
+                    if (DownLeft_door.Left > Main_lift.Left - DownLeft_door.Width / 2 - 30)
                     {
                         DownLeft_door.Left -= doorspeed;
                         DownRight_door.Left += doorspeed;
@@ -184,7 +203,7 @@ namespace Lift_System
                 else if (isClosing)
                 {
                     // Close the doors
-                    if (DownLeft_door.Right < Main_lift.Width + doorMaxOpenWidth / 2 + 5)
+                    if (DownLeft_door.Right < Main_lift.Width + doorMaxOpenWidth / 2 - 5)
                     {
                         DownLeft_door.Left += doorspeed;
                         DownRight_door.Left -= doorspeed;
@@ -202,7 +221,7 @@ namespace Lift_System
                 if (isOpening)
                 {
                     // Open the doors
-                    if (UpLeft_door.Left > doorMaxOpenWidth / 2)
+                    if (UpLeft_door.Left > Main_lift.Left - UpLeft_door.Width / 2 - 30)
                     {
                         UpLeft_door.Left -= doorspeed;
                         UpRight_door.Left += doorspeed;
@@ -216,7 +235,7 @@ namespace Lift_System
                 else if (isClosing)
                 {
                     // Close the doors
-                    if (UpLeft_door.Right < Main_lift.Width + doorMaxOpenWidth / 2 + 5)
+                    if (UpLeft_door.Right < Main_lift.Width + doorMaxOpenWidth / 2 - 5)
                     {
                         UpLeft_door.Left += doorspeed;
                         UpRight_door.Left -= doorspeed;
@@ -234,6 +253,16 @@ namespace Lift_System
         {
             dbManager.DeleteLogsFromDB(dt);
             DataTable.Rows.Clear();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LiftDown();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LiftUp();
         }
     }
 }

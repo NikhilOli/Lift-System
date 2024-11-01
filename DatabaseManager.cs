@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Lift_System
 {
@@ -22,6 +23,9 @@ namespace Lift_System
 
             InsertLoginIntoDB(dt);
         }
+
+        
+
         public void InsertLoginIntoDB(DataTable dt)
         {
             try
@@ -59,15 +63,23 @@ namespace Lift_System
                         dt.Rows.Clear();
                         adapter.Fill(dt);
 
-                        DataTable.Rows.Clear();
-
-                        foreach (DataRow row in dt.Rows)
+                        DataTable.Invoke((MethodInvoker)(() =>
                         {
-                            string currentTime = Convert.ToDateTime(row["LogTime"]).ToString("hh:mm:ss");
-                            string events = row["EventDescription"].ToString();
+                            DataTable.Rows.Clear();
 
-                            DataTable.Rows.Add(currentTime, events);
-                        }
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                string currentTime = row["LogTime"] != DBNull.Value
+                                    ? Convert.ToDateTime(row["LogTime"]).ToString("hh:mm:ss")
+                                    : "N/A"; // Handle null value
+
+                                string events = row["EventDescription"] != DBNull.Value
+                                    ? row["EventDescription"].ToString()
+                                    : "No Description"; // Handle null value
+
+                                DataTable.Rows.Add(currentTime, events);
+                            }
+                        }));
                     }
                 }
             }
@@ -75,6 +87,23 @@ namespace Lift_System
             {
                 MessageBox.Show("Error loading logs From DB: " + ex.Message);
             }
+        }
+
+
+
+        public void LoadLogsAsync(DataTable dt, DataGridView DataTable)
+        {
+            BackgroundWorker bgWorker = new BackgroundWorker();
+            bgWorker.DoWork += (sender, e) =>
+            {
+                // Perform the database loading in the background
+                loadLogsFromDB(dt, DataTable);
+            };
+            bgWorker.RunWorkerCompleted += (sender, e) =>
+            {
+                MessageBox.Show("Logs loaded successfully.");
+            };
+            bgWorker.RunWorkerAsync();
         }
         public void DeleteLogsFromDB(DataTable dt)
         {

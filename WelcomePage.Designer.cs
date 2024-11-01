@@ -47,9 +47,9 @@ namespace Lift_System
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(-4, 2);
+            panel1.Location = new Point(-4, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(888, 408);
+            panel1.Size = new Size(888, 410);
             panel1.TabIndex = 0;
             // 
             // loading
@@ -87,11 +87,11 @@ namespace Lift_System
             // 
             label1.AutoSize = true;
             label1.Font = new Font("SimSun", 30F, FontStyle.Bold);
-            label1.Location = new Point(245, 188);
+            label1.Location = new Point(172, 191);
             label1.Name = "label1";
-            label1.Size = new Size(412, 50);
+            label1.Size = new Size(516, 50);
             label1.TabIndex = 0;
-            label1.Text = "Simple Elevator";
+            label1.Text = "Lift Control System";
             // 
             // progressBar
             // 
