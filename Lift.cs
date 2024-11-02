@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -36,6 +36,8 @@ namespace Lift_System
         public Lift()
         {
             InitializeComponent();
+            AutoCloseTimer.Interval = 3000; // Auto-close doors after 3 seconds (adjust as needed)
+            AutoCloseTimer.Tick += AutoCloseTimer_Tick;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             doorMaxOpenWidth = Main_lift.Width / 2 - 40;
 
@@ -49,11 +51,16 @@ namespace Lift_System
             OnLiftEvent = (message) => dbManager.logEvents(message, dt, DataTable);
 
         }
-        private async void OpenDoorsAfterArrival()
-        {
-            //ResetControlsAfterLiftMovement();
 
-            // Automatically open the doors when the lift arrives
+        private void AutoCloseTimer_Tick(object sender, EventArgs e)
+        {
+            AutoCloseTimer.Stop();
+            DoorClose(); // Automatically close the doors
+        }
+
+        private void OpenDoorsAfterArrival()
+        {
+            // Log the event and open the doors when the lift arrives
             if (current_floor == 0)
             {
                 dbManager.logEvents("Lift arrived at ground floor, opening doors.", dt, DataTable);
@@ -63,12 +70,10 @@ namespace Lift_System
                 dbManager.logEvents("Lift arrived at first floor, opening doors.", dt, DataTable);
             }
 
-            Door_open_Click(null, null);
-
-            //await Task.Delay(3000);
-
-            //Door_close_Click(null, null);
+            DoorOpen();
+            AutoCloseTimer.Start();
         }
+
 
         private void Lift_Load(object sender, EventArgs e)
         {
@@ -81,29 +86,90 @@ namespace Lift_System
 
         // This is for button cick functions 
 
+
         private void LiftUp()
         {
-            Door_close_Click(null, null);
-            isMovingUp = true;
-            isMovingDown = false;
-            Lift_timer.Start();
-            Down_Button.Enabled = false;
-            //dbManager.logEvents("Lift Going Up", dt, DataTable);
-            OnLiftEvent?.Invoke("Lift Going Up");
+            if (isOpening)
+            {
+                DoorClose(); // Use the existing method to close the doors   
+                isOpening = false;
+                // Set up a timer to delay lift movement until doors have closed
+                Door_timer.Tick += (s, e) =>
+                {
+                    if (!isClosing)
+                    {
+                        Door_timer.Stop();
+                        isMovingUp = true;
+                        Lift_timer.Start();
+                        Down_Button.Enabled = false;
+                        OnLiftEvent?.Invoke("Lift Going Up");
+                    }
+                };
+            }
+            else
+            {
+                DoorClose();
+                isMovingUp = true;
+                isMovingDown = false;
+                Lift_timer.Start();
+                Down_Button.Enabled = false;
+                OnLiftEvent?.Invoke("Lift Going Up");
+            }
         }
 
 
         private void LiftDown()
         {
-            Door_close_Click(null, null);
-            isMovingDown = true;
-            isMovingUp = false;
-            Lift_timer.Start();
-            Up_button.Enabled = false;
-            //dbManager.logEvents("Lift Going Down", dt, DataTable);
-            OnLiftEvent?.Invoke("Lift Going Down");
+            if (isOpening)
+            {
+                DoorClose();
+                isOpening = false;
+
+                Door_timer.Tick += (s, e) =>
+                {
+                    if (!isClosing)
+                    {
+                        Door_timer.Stop();
+                        isMovingDown = true;
+                        Lift_timer.Start();
+                        Up_button.Enabled = false;
+                        OnLiftEvent?.Invoke("Lift Going Down");
+                    }
+                };
+            }
+            else
+            {
+                DoorClose();
+                isMovingDown = true;
+                isMovingUp = false;
+                Lift_timer.Start();
+                Up_button.Enabled = false;
+                OnLiftEvent?.Invoke("Lift Going Down");
+            }
+
         }
 
+        private void DoorClose()
+        {
+            if (!isClosing) // Check to prevent duplicate logs and operations
+            {
+                isClosing = true;
+                isOpening = false;
+                Door_timer.Start();
+                Door_open.Enabled = false;
+                OnLiftEvent?.Invoke("Lift Door Closing");
+            }
+
+        }
+
+        private void DoorOpen()
+        {
+            isOpening = true;
+            isClosing = false;
+            Door_timer.Start();
+            Door_close.Enabled = false;
+            OnLiftEvent?.Invoke("Lift Door Opening");
+        }
 
 
         private void Up_button_Click(object sender, EventArgs e)
@@ -114,7 +180,6 @@ namespace Lift_System
         private void Down_Button_Click(object sender, EventArgs e)
         {
             LiftDown();
-
         }
 
         private void Lift_timer_Tick(object sender, EventArgs e)
@@ -126,7 +191,7 @@ namespace Lift_System
                 if (Main_lift.Top > 0)
                 {
                     Main_lift.Top -= liftspeed;
-                    floorDisplayLabel.Text = "1";
+                    floorDisplayLabel.Text = "⬆️⬆️";
 
                 }
                 else
@@ -135,6 +200,7 @@ namespace Lift_System
                     Down_Button.Enabled = true;
                     current_floor = 1;
                     floorDisplayLabel.Text = "1";
+                    Up_button.BackColor = Color.White;
                     OpenDoorsAfterArrival();
 
                 }
@@ -146,7 +212,7 @@ namespace Lift_System
                 if (Main_lift.Bottom < this.ClientSize.Height)
                 {
                     Main_lift.Top += liftspeed;
-                    floorDisplayLabel.Text = "0";
+                    floorDisplayLabel.Text = "⬇️⬇️";
                 }
                 else
                 {
@@ -154,6 +220,7 @@ namespace Lift_System
                     Up_button.Enabled = true;
                     current_floor = 0;
                     floorDisplayLabel.Text = "0";
+                    Down_Button.BackColor = Color.White; // Reset color when lift stops
                     OpenDoorsAfterArrival();
                 }
             }
@@ -161,24 +228,14 @@ namespace Lift_System
 
         private void Door_open_Click(object sender, EventArgs e)
         {
-            isOpening = true;
-            isClosing = false;
-            Door_timer.Start();
-            Door_close.Enabled = false;
-            //dbManager.logEvents("Lift Door Opening", dt, DataTable);
-            OnLiftEvent?.Invoke("Lift Door Opening");
+            DoorOpen();
+            AutoCloseTimer.Start();
 
         }
 
         private void Door_close_Click(object sender, EventArgs e)
         {
-            isClosing = true;
-            isOpening = false;
-            Door_timer.Start();
-            Door_open.Enabled = false;
-            //dbManager.logEvents("Lift Door Closing", dt, DataTable);
-            OnLiftEvent?.Invoke("Lift Door Closing");
-
+            DoorClose();
 
         }
         private void Door_timer_Tick(object sender, EventArgs e)
@@ -193,11 +250,28 @@ namespace Lift_System
                     {
                         DownLeft_door.Left -= doorspeed;
                         DownRight_door.Left += doorspeed;
+                        //Task.Delay(5000).ContinueWith(_ => // Small delay for UI to update
+                        //{
+                        //    this.Invoke((MethodInvoker)(() =>
+                        //    {
+                        //        if (this.IsHandleCreated)
+                        //        {
+                        //            DoorClose(); // Call the function safely
+                        //        }
+                        //        else
+                        //        {
+                        //            // Optionally, use BeginInvoke or handle this case differently
+                        //            this.BeginInvoke((MethodInvoker)(() => DoorClose()));
+                        //        }
+                        //    }));
+
+                        //});
                     }
                     else
                     {
                         Door_timer.Stop();
                         Door_close.Enabled = true;
+                        isOpening = false;
                     }
                 }
                 else if (isClosing)
@@ -212,6 +286,7 @@ namespace Lift_System
                     {
                         Door_timer.Stop();
                         Door_open.Enabled = true;
+                        isClosing = false;
                     }
                 }
             }
@@ -225,11 +300,27 @@ namespace Lift_System
                     {
                         UpLeft_door.Left -= doorspeed;
                         UpRight_door.Left += doorspeed;
+                        //Task.Delay(5000).ContinueWith(_ => // Small delay for UI to update
+                        //{
+                        //    this.Invoke((MethodInvoker)(() =>
+                        //    {
+                        //        if (this.IsHandleCreated)
+                        //        {
+                        //            DoorClose(); // Call the function safely
+                        //        }
+                        //        else
+                        //        {
+                        //            // Optionally, use BeginInvoke or handle this case differently
+                        //            this.BeginInvoke((MethodInvoker)(() => DoorClose()));
+                        //        }
+                        //    }));
+                        //});
                     }
                     else
                     {
                         Door_timer.Stop();
                         Door_close.Enabled = true;
+                        isOpening = false;
                     }
                 }
                 else if (isClosing)
@@ -244,6 +335,7 @@ namespace Lift_System
                     {
                         Door_timer.Stop();
                         Door_open.Enabled = true;
+                        isClosing = false;
                     }
                 }
             }

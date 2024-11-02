@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lift));
             panel1 = new Panel();
+            panel2 = new Panel();
             floorDisplayLabel = new Label();
             Door_close = new Button();
             Door_open = new Button();
@@ -48,7 +49,10 @@
             panel5 = new Panel();
             button1 = new Button();
             button2 = new Button();
+            doorCloseTimer = new System.Windows.Forms.Timer(components);
+            AutoCloseTimer = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Main_lift).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DownLeft_door).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DownRight_door).BeginInit();
@@ -63,7 +67,7 @@
             panel1.BackgroundImage = (Image)resources.GetObject("panel1.BackgroundImage");
             panel1.BackgroundImageLayout = ImageLayout.Stretch;
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(floorDisplayLabel);
+            panel1.Controls.Add(panel2);
             panel1.Controls.Add(Door_close);
             panel1.Controls.Add(Door_open);
             panel1.Controls.Add(Down_Button);
@@ -73,18 +77,28 @@
             panel1.Size = new Size(227, 391);
             panel1.TabIndex = 0;
             // 
+            // panel2
+            // 
+            panel2.BackColor = Color.Black;
+            panel2.Controls.Add(floorDisplayLabel);
+            panel2.ForeColor = Color.Transparent;
+            panel2.Location = new Point(50, 75);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(130, 76);
+            panel2.TabIndex = 5;
+            // 
             // floorDisplayLabel
             // 
             floorDisplayLabel.AutoSize = true;
             floorDisplayLabel.BackColor = Color.Black;
-            floorDisplayLabel.Font = new Font("Lucida Console", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            floorDisplayLabel.Font = new Font("Franklin Gothic Medium", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
             floorDisplayLabel.ForeColor = Color.Red;
-            floorDisplayLabel.Location = new Point(75, 75);
+            floorDisplayLabel.Location = new Point(22, 0);
             floorDisplayLabel.Name = "floorDisplayLabel";
-            floorDisplayLabel.Size = new Size(62, 60);
+            floorDisplayLabel.Padding = new Padding(5, 0, 5, 0);
+            floorDisplayLabel.Size = new Size(77, 75);
             floorDisplayLabel.TabIndex = 4;
             floorDisplayLabel.Text = "0";
-            floorDisplayLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Door_close
             // 
@@ -276,7 +290,8 @@
             Text = "Lift System";
             Load += Lift_Load;
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Main_lift).EndInit();
             ((System.ComponentModel.ISupportInitialize)DownLeft_door).EndInit();
             ((System.ComponentModel.ISupportInitialize)DownRight_door).EndInit();
@@ -302,9 +317,12 @@
         private PictureBox UpLeft_door;
         private DataGridView DataTable;
         private Button DeleteButton;
-        private Label floorDisplayLabel;
         private Panel panel5;
         private Button button1;
         private Button button2;
+        private Label floorDisplayLabel;
+        private Panel panel2;
+        private System.Windows.Forms.Timer doorCloseTimer;
+        private System.Windows.Forms.Timer AutoCloseTimer;
     }
 }
