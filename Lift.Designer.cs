@@ -30,6 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lift));
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panel1 = new Panel();
             panel2 = new Panel();
             floorDisplayLabel = new Label();
@@ -54,6 +56,7 @@
             doorCheckTimer2 = new System.Windows.Forms.Timer(components);
             floorDownDisplay = new Label();
             floorUpDisplay = new Label();
+            LogShowBtn = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Main_lift).BeginInit();
@@ -75,9 +78,9 @@
             panel1.Controls.Add(Door_open);
             panel1.Controls.Add(Down_Button);
             panel1.Controls.Add(Up_button);
-            panel1.Location = new Point(451, 35);
+            panel1.Location = new Point(427, 40);
             panel1.Name = "panel1";
-            panel1.Size = new Size(227, 391);
+            panel1.Size = new Size(227, 473);
             panel1.TabIndex = 0;
             // 
             // panel2
@@ -85,33 +88,34 @@
             panel2.BackColor = Color.Black;
             panel2.Controls.Add(floorDisplayLabel);
             panel2.ForeColor = Color.Transparent;
-            panel2.Location = new Point(50, 75);
+            panel2.Location = new Point(40, 75);
             panel2.Name = "panel2";
-            panel2.Size = new Size(130, 76);
+            panel2.Size = new Size(140, 76);
             panel2.TabIndex = 5;
             // 
             // floorDisplayLabel
             // 
             floorDisplayLabel.AutoSize = true;
             floorDisplayLabel.BackColor = Color.Black;
-            floorDisplayLabel.Font = new Font("Franklin Gothic Medium", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            floorDisplayLabel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             floorDisplayLabel.ForeColor = Color.Red;
-            floorDisplayLabel.Location = new Point(22, 0);
+            floorDisplayLabel.Location = new Point(30, 0);
             floorDisplayLabel.Name = "floorDisplayLabel";
             floorDisplayLabel.Padding = new Padding(5, 0, 5, 0);
-            floorDisplayLabel.Size = new Size(77, 75);
+            floorDisplayLabel.Size = new Size(73, 70);
             floorDisplayLabel.TabIndex = 4;
             floorDisplayLabel.Text = "0";
             // 
             // Door_close
             // 
+            Door_close.BackColor = Color.Transparent;
             Door_close.BackgroundImage = (Image)resources.GetObject("Door_close.BackgroundImage");
             Door_close.BackgroundImageLayout = ImageLayout.Stretch;
             Door_close.Location = new Point(122, 328);
             Door_close.Name = "Door_close";
             Door_close.Size = new Size(50, 54);
             Door_close.TabIndex = 3;
-            Door_close.UseVisualStyleBackColor = true;
+            Door_close.UseVisualStyleBackColor = false;
             Door_close.Click += Door_close_Click;
             // 
             // Door_open
@@ -216,24 +220,40 @@
             // 
             // DataTable
             // 
+            DataTable.AllowUserToAddRows = false;
+            DataTable.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle3.BackColor = Color.LightGray;
+            DataTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             DataTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             DataTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DataTable.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.DarkBlue;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            DataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DataTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataTable.Location = new Point(799, 35);
+            DataTable.EnableHeadersVisualStyles = false;
+            DataTable.GridColor = Color.Gray;
+            DataTable.Location = new Point(719, 12);
             DataTable.Name = "DataTable";
+            DataTable.ReadOnly = true;
             DataTable.RowHeadersWidth = 51;
-            DataTable.Size = new Size(338, 501);
+            DataTable.Size = new Size(414, 501);
             DataTable.TabIndex = 11;
             // 
             // DeleteButton
             // 
-            DeleteButton.BackColor = Color.Tomato;
+            DeleteButton.BackColor = Color.Red;
             DeleteButton.ForeColor = SystemColors.ButtonFace;
-            DeleteButton.Location = new Point(699, 464);
+            DeleteButton.Location = new Point(997, 519);
             DeleteButton.Name = "DeleteButton";
-            DeleteButton.Size = new Size(94, 37);
+            DeleteButton.Size = new Size(100, 35);
             DeleteButton.TabIndex = 12;
-            DeleteButton.Text = "Delete";
+            DeleteButton.Text = "Delete Logs";
             DeleteButton.UseVisualStyleBackColor = false;
             DeleteButton.Click += DeleteButton_Click;
             // 
@@ -252,7 +272,7 @@
             button1.BackColor = SystemColors.ActiveCaptionText;
             button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
             button1.BackgroundImageLayout = ImageLayout.Stretch;
-            button1.Location = new Point(333, 111);
+            button1.Location = new Point(258, 116);
             button1.Name = "button1";
             button1.Size = new Size(38, 41);
             button1.TabIndex = 19;
@@ -264,7 +284,7 @@
             button2.BackColor = SystemColors.ActiveCaptionText;
             button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
             button2.BackgroundImageLayout = ImageLayout.Stretch;
-            button2.Location = new Point(333, 459);
+            button2.Location = new Point(258, 472);
             button2.Name = "button2";
             button2.Size = new Size(38, 41);
             button2.TabIndex = 20;
@@ -279,7 +299,7 @@
             floorDownDisplay.FlatStyle = FlatStyle.System;
             floorDownDisplay.Font = new Font("Franklin Gothic Medium", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             floorDownDisplay.ForeColor = Color.Red;
-            floorDownDisplay.Location = new Point(119, 354);
+            floorDownDisplay.Location = new Point(119, 360);
             floorDownDisplay.Name = "floorDownDisplay";
             floorDownDisplay.Padding = new Padding(5, 0, 5, 0);
             floorDownDisplay.Size = new Size(49, 41);
@@ -295,7 +315,7 @@
             floorUpDisplay.FlatStyle = FlatStyle.System;
             floorUpDisplay.Font = new Font("Franklin Gothic Medium", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             floorUpDisplay.ForeColor = Color.Red;
-            floorUpDisplay.Location = new Point(119, -4);
+            floorUpDisplay.Location = new Point(119, -1);
             floorUpDisplay.Name = "floorUpDisplay";
             floorUpDisplay.Padding = new Padding(5, 0, 5, 0);
             floorUpDisplay.Size = new Size(49, 41);
@@ -303,11 +323,25 @@
             floorUpDisplay.Text = "0";
             floorUpDisplay.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // LogShowBtn
+            // 
+            LogShowBtn.BackColor = Color.Teal;
+            LogShowBtn.ForeColor = SystemColors.ButtonFace;
+            LogShowBtn.Location = new Point(881, 519);
+            LogShowBtn.Name = "LogShowBtn";
+            LogShowBtn.Size = new Size(100, 35);
+            LogShowBtn.TabIndex = 22;
+            LogShowBtn.Text = "Show Logs";
+            LogShowBtn.UseVisualStyleBackColor = false;
+            LogShowBtn.Click += LogShowBtn_Click;
+            // 
             // Lift
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightGray;
             ClientSize = new Size(1162, 573);
+            Controls.Add(LogShowBtn);
             Controls.Add(floorUpDisplay);
             Controls.Add(floorDownDisplay);
             Controls.Add(button2);
@@ -365,5 +399,6 @@
         private System.Windows.Forms.Timer doorCheckTimer2;
         private Label floorDownDisplay;
         private Label floorUpDisplay;
+        private Button LogShowBtn;
     }
 }

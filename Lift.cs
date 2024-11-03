@@ -77,10 +77,13 @@ namespace Lift_System
 
         private void Lift_Load(object sender, EventArgs e)
         {
-            //dbManager.loadLogsFromDB(dt, DataTable);
+            
+            
+        }
+        private void LogShowBtn_Click(object sender, EventArgs e)
+        {
             dbManager.LoadLogsAsync(dt, DataTable);
         }
-
 
 
 
@@ -184,16 +187,16 @@ namespace Lift_System
         }
 
         private void DoorClose()
-    {
-        if (!isClosing && !isMovingUp && !isMovingDown) // Only close if not already closing and lift is stationary
         {
-            isClosing = true;
-            isOpening = false;
-            Door_timer.Start();
-            Door_open.Enabled = false;
-            OnLiftEvent?.Invoke("Lift Door Closing");
+            if (!isClosing && !isMovingUp && !isMovingDown) // Only close if not already closing and lift is stationary
+            {
+                isClosing = true;
+                isOpening = false;
+                Door_timer.Start();
+                Door_open.Enabled = false;
+                OnLiftEvent?.Invoke("Lift Door Closing");
+            }
         }
-    }
 
         private void DoorOpen()
         {
@@ -218,7 +221,7 @@ namespace Lift_System
         private void Lift_timer_Tick(object sender, EventArgs e)
         {
             int topFloorPosition = 42; // Adjust this value based on your desired top position
-            int bottomFloorPosition = this.ClientSize.Height - Main_lift.Height ; // Adjust bottom margin
+            int bottomFloorPosition = this.ClientSize.Height - Main_lift.Height; // Adjust bottom margin
 
             if (isMovingUp)
             {

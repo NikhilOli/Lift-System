@@ -12,9 +12,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Lift_System
 {
-    public partial class WelcomePage : Form
+    public partial class WelcomeScreen : Form
     {
-        public WelcomePage()
+        public WelcomeScreen()
         {
             InitializeComponent();
         }
@@ -30,7 +30,7 @@ namespace Lift_System
             {
                 timer1.Stop();
                 loading.Text = "100%"; // Ensure text is updated
-                Task.Delay(100).ContinueWith(_ => // Small delay for UI to update
+                Task.Delay(800).ContinueWith(_ => // Small delay for UI to update
                 {
                     this.Invoke((MethodInvoker)(() =>
                     {

@@ -1,7 +1,7 @@
 ﻿
 namespace Lift_System
 {
-    partial class WelcomePage
+    partial class WelcomeScreen
     {
         /// <summary>
         ///  Required designer variable.
@@ -31,18 +31,19 @@ namespace Lift_System
         {
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
+            progressBar = new ProgressBar();
             loading = new Label();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            progressBar = new ProgressBar();
             timer1 = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.ActiveCaption;
+            panel1.BackColor = Color.Indigo;
+            panel1.Controls.Add(progressBar);
             panel1.Controls.Add(loading);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
@@ -52,69 +53,74 @@ namespace Lift_System
             panel1.Size = new Size(888, 410);
             panel1.TabIndex = 0;
             // 
+            // progressBar
+            // 
+            progressBar.Location = new Point(227, 298);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(400, 10);
+            progressBar.Style = ProgressBarStyle.Continuous;
+            progressBar.TabIndex = 1;
+            // 
             // loading
             // 
             loading.AutoSize = true;
-            loading.Font = new Font("Impact", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            loading.ForeColor = Color.Lime;
-            loading.Location = new Point(454, 258);
+            loading.Font = new Font("Segoe UI", 12F);
+            loading.ForeColor = Color.White;
+            loading.Location = new Point(448, 332);
             loading.Name = "loading";
-            loading.Size = new Size(49, 35);
+            loading.Size = new Size(39, 28);
             loading.TabIndex = 3;
             loading.Text = "0%";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 16F);
-            label3.Location = new Point(328, 258);
+            label3.Font = new Font("Segoe UI", 12F);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(322, 332);
             label3.Name = "label3";
-            label3.Size = new Size(120, 37);
+            label3.Size = new Size(87, 28);
             label3.TabIndex = 2;
             label3.Text = "Loading:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(309, 121);
+            label2.Font = new Font("Segoe UI Light", 31.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(294, 69);
             label2.Name = "label2";
-            label2.Size = new Size(267, 48);
+            label2.Size = new Size(304, 72);
             label2.TabIndex = 1;
             label2.Text = "Welcome To";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("SimSun", 30F, FontStyle.Bold);
-            label1.Location = new Point(172, 191);
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Segoe UI", 40.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(129, 150);
             label1.Name = "label1";
-            label1.Size = new Size(516, 50);
+            label1.Size = new Size(641, 89);
             label1.TabIndex = 0;
             label1.Text = "Lift Control System";
-            // 
-            // progressBar
-            // 
-            progressBar.Location = new Point(-4, 409);
-            progressBar.Name = "progressBar";
-            progressBar.Size = new Size(888, 46);
-            progressBar.TabIndex = 1;
             // 
             // timer1
             // 
             timer1.Tick += timer1_Tick;
             // 
-            // WelcomePage
+            // WelcomeScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Indigo;
             ClientSize = new Size(882, 453);
-            Controls.Add(progressBar);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Name = "WelcomePage";
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "WelcomeScreen";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Welcome Page";
+            Text = "Welcome Screen";
             Load += WelcomePage_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
