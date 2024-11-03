@@ -49,8 +49,11 @@
             panel5 = new Panel();
             button1 = new Button();
             button2 = new Button();
-            doorCloseTimer = new System.Windows.Forms.Timer(components);
+            doorCheckTimer = new System.Windows.Forms.Timer(components);
             AutoCloseTimer = new System.Windows.Forms.Timer(components);
+            doorCheckTimer2 = new System.Windows.Forms.Timer(components);
+            floorDownDisplay = new Label();
+            floorUpDisplay = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Main_lift).BeginInit();
@@ -194,7 +197,7 @@
             // UpRight_door
             // 
             UpRight_door.Image = (Image)resources.GetObject("UpRight_door.Image");
-            UpRight_door.Location = new Point(150, 0);
+            UpRight_door.Location = new Point(150, 40);
             UpRight_door.Name = "UpRight_door";
             UpRight_door.Size = new Size(87, 169);
             UpRight_door.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -204,7 +207,7 @@
             // UpLeft_door
             // 
             UpLeft_door.Image = (Image)resources.GetObject("UpLeft_door.Image");
-            UpLeft_door.Location = new Point(66, 0);
+            UpLeft_door.Location = new Point(66, 40);
             UpLeft_door.Name = "UpLeft_door";
             UpLeft_door.Size = new Size(87, 169);
             UpLeft_door.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -268,11 +271,45 @@
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
+            // floorDownDisplay
+            // 
+            floorDownDisplay.AutoSize = true;
+            floorDownDisplay.BackColor = Color.Black;
+            floorDownDisplay.BorderStyle = BorderStyle.Fixed3D;
+            floorDownDisplay.FlatStyle = FlatStyle.System;
+            floorDownDisplay.Font = new Font("Franklin Gothic Medium", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            floorDownDisplay.ForeColor = Color.Red;
+            floorDownDisplay.Location = new Point(119, 354);
+            floorDownDisplay.Name = "floorDownDisplay";
+            floorDownDisplay.Padding = new Padding(5, 0, 5, 0);
+            floorDownDisplay.Size = new Size(49, 41);
+            floorDownDisplay.TabIndex = 4;
+            floorDownDisplay.Text = "0";
+            floorDownDisplay.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // floorUpDisplay
+            // 
+            floorUpDisplay.AutoSize = true;
+            floorUpDisplay.BackColor = Color.Black;
+            floorUpDisplay.BorderStyle = BorderStyle.Fixed3D;
+            floorUpDisplay.FlatStyle = FlatStyle.System;
+            floorUpDisplay.Font = new Font("Franklin Gothic Medium", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            floorUpDisplay.ForeColor = Color.Red;
+            floorUpDisplay.Location = new Point(119, -4);
+            floorUpDisplay.Name = "floorUpDisplay";
+            floorUpDisplay.Padding = new Padding(5, 0, 5, 0);
+            floorUpDisplay.Size = new Size(49, 41);
+            floorUpDisplay.TabIndex = 21;
+            floorUpDisplay.Text = "0";
+            floorUpDisplay.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Lift
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1162, 573);
+            Controls.Add(floorUpDisplay);
+            Controls.Add(floorDownDisplay);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(panel5);
@@ -299,6 +336,7 @@
             ((System.ComponentModel.ISupportInitialize)UpLeft_door).EndInit();
             ((System.ComponentModel.ISupportInitialize)DataTable).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -322,7 +360,10 @@
         private Button button2;
         private Label floorDisplayLabel;
         private Panel panel2;
-        private System.Windows.Forms.Timer doorCloseTimer;
+        private System.Windows.Forms.Timer doorCheckTimer;
         private System.Windows.Forms.Timer AutoCloseTimer;
+        private System.Windows.Forms.Timer doorCheckTimer2;
+        private Label floorDownDisplay;
+        private Label floorUpDisplay;
     }
 }
