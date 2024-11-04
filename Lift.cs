@@ -36,7 +36,7 @@ namespace Lift_System
         public Lift()
         {
             InitializeComponent();
-            AutoCloseTimer.Interval = 3000; // Auto-close doors after 3 seconds (adjust as needed)
+            AutoCloseTimer.Interval = 5000; // Auto-close doors after 3 seconds (adjust as needed)
             AutoCloseTimer.Tick += AutoCloseTimer_Tick;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             doorMaxOpenWidth = Main_lift.Width / 2 - 40;
@@ -62,7 +62,7 @@ namespace Lift_System
         {
             // Log the event and open the doors when the lift arrives
             if (current_floor == 0)
-            {
+            {   
                 dbManager.logEvents("Lift arrived at ground floor, opening doors.", dt, DataTable);
             }
             else
@@ -77,8 +77,14 @@ namespace Lift_System
 
         private void Lift_Load(object sender, EventArgs e)
         {
-            
-            
+            if (current_floor == 0)
+            {
+                Down_Button.Enabled = false;
+            }
+            else
+            {
+                Down_Button.Enabled = true;
+            }
         }
         private void LogShowBtn_Click(object sender, EventArgs e)
         {
@@ -240,6 +246,7 @@ namespace Lift_System
                     Main_lift.Top = topFloorPosition; // Ensure exact positioning
                     Lift_timer.Stop();
                     Down_Button.Enabled = true;
+                    Up_button.Enabled = false;
                     isMovingUp = false;
                     current_floor = 1;
                     floorDisplayLabel.Text = "1";
@@ -267,6 +274,7 @@ namespace Lift_System
                     Main_lift.Top = bottomFloorPosition; // Ensure exact positioning
                     Lift_timer.Stop();
                     Up_button.Enabled = true;
+                    Down_Button.Enabled = false;
                     isMovingDown = false;
                     current_floor = 0;
                     floorDisplayLabel.Text = "0";
