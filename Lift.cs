@@ -13,22 +13,19 @@ namespace Lift_System
 {
     public partial class Lift : Form
     {
-
-        // Define a delegate for logging events
+        // delegate for logging events
         public delegate void LiftEventHandler(string message);
 
-        // Create an instance of the delegate
+        // instance of the delegate
         public LiftEventHandler OnLiftEvent;
 
         bool isMovingUp = false;
         bool isMovingDown = false;
         int liftspeed = 10;
-
         bool isOpening = false;
         bool isClosing = false;
         int doorspeed = 5;
         int current_floor = 0;
-
         int doorMaxOpenWidth;
 
         DatabaseManager dbManager = new DatabaseManager();
@@ -36,7 +33,7 @@ namespace Lift_System
         public Lift()
         {
             InitializeComponent();
-            AutoCloseTimer.Interval = 5000; // Auto-close doors after 3 seconds (adjust as needed)
+            AutoCloseTimer.Interval = 5000; 
             AutoCloseTimer.Tick += AutoCloseTimer_Tick;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             doorMaxOpenWidth = Main_lift.Width / 2 - 40;
@@ -62,7 +59,7 @@ namespace Lift_System
         {
             // Log the event and open the doors when the lift arrives
             if (current_floor == 0)
-            {   
+            {
                 dbManager.logEvents("Lift arrived at ground floor, opening doors.", dt, DataTable);
             }
             else
@@ -73,17 +70,17 @@ namespace Lift_System
             DoorOpen();
             AutoCloseTimer.Start();
         }
-
-
         private void Lift_Load(object sender, EventArgs e)
         {
             if (current_floor == 0)
             {
                 Down_Button.Enabled = false;
+                DownBtn.Enabled = false;
             }
             else
             {
                 Down_Button.Enabled = true;
+                DownBtn.Enabled = true;
             }
         }
         private void LogShowBtn_Click(object sender, EventArgs e)
@@ -91,11 +88,7 @@ namespace Lift_System
             dbManager.LoadLogsAsync(dt, DataTable);
         }
 
-
-
         // This is for button cick functions 
-
-
         private void LiftUp()
         {
             if (isOpening || isClosing)
@@ -118,6 +111,7 @@ namespace Lift_System
                     isMovingDown = false;
                     Lift_timer.Start();
                     Down_Button.Enabled = false;
+                    DownBtn.Enabled = false;
                     OnLiftEvent?.Invoke("Lift Going Up");
                 };
                 doorCheckTimer.Start();
@@ -128,6 +122,7 @@ namespace Lift_System
                 isMovingDown = false;
                 Lift_timer.Start();
                 Down_Button.Enabled = false;
+                DownBtn.Enabled = false;
                 OnLiftEvent?.Invoke("Lift Going Up");
             }
         }
@@ -140,6 +135,7 @@ namespace Lift_System
             isMovingDown = false;
             Lift_timer.Start();
             Down_Button.Enabled = false;
+            DownBtn.Enabled = false;
             OnLiftEvent?.Invoke("Lift Going Up");
         }
 
@@ -151,10 +147,9 @@ namespace Lift_System
             isMovingUp = false;
             Lift_timer.Start();
             Up_button.Enabled = false;
+            UpBtn.Enabled = false;
             OnLiftEvent?.Invoke("Lift Going Down");
         }
-
-
 
         private void LiftDown()
         {
@@ -178,6 +173,7 @@ namespace Lift_System
                     isMovingUp = false;
                     Lift_timer.Start();
                     Up_button.Enabled = false;
+                    UpBtn.Enabled = false;
                     OnLiftEvent?.Invoke("Lift Going Down");
                 };
                 doorCheckTimer.Start();
@@ -188,10 +184,10 @@ namespace Lift_System
                 isMovingUp = false;
                 Lift_timer.Start();
                 Up_button.Enabled = false;
+                UpBtn.Enabled = false;
                 OnLiftEvent?.Invoke("Lift Going Down");
             }
         }
-
         private void DoorClose()
         {
             if (!isClosing && !isMovingUp && !isMovingDown) // Only close if not already closing and lift is stationary
@@ -203,7 +199,6 @@ namespace Lift_System
                 OnLiftEvent?.Invoke("Lift Door Closing");
             }
         }
-
         private void DoorOpen()
         {
             isOpening = true;
@@ -212,7 +207,6 @@ namespace Lift_System
             Door_close.Enabled = false;
             OnLiftEvent?.Invoke("Lift Door Opening");
         }
-
 
         private void Up_button_Click(object sender, EventArgs e)
         {
@@ -226,8 +220,8 @@ namespace Lift_System
 
         private void Lift_timer_Tick(object sender, EventArgs e)
         {
-            int topFloorPosition = 42; // Adjust this value based on your desired top position
-            int bottomFloorPosition = this.ClientSize.Height - Main_lift.Height; // Adjust bottom margin
+            int topFloorPosition = 42; 
+            int bottomFloorPosition = this.ClientSize.Height - Main_lift.Height; 
 
             if (isMovingUp)
             {
@@ -246,7 +240,9 @@ namespace Lift_System
                     Main_lift.Top = topFloorPosition; // Ensure exact positioning
                     Lift_timer.Stop();
                     Down_Button.Enabled = true;
+                    DownBtn.Enabled = true;
                     Up_button.Enabled = false;
+                    UpBtn.Enabled = false;
                     isMovingUp = false;
                     current_floor = 1;
                     floorDisplayLabel.Text = "1";
@@ -258,7 +254,6 @@ namespace Lift_System
             }
             if (isMovingDown)
             {
-                Down_Button.BackColor = Color.Red;
                 Up_button.BackColor = SystemColors.Control;
 
                 if (Main_lift.Top < bottomFloorPosition)
@@ -274,7 +269,9 @@ namespace Lift_System
                     Main_lift.Top = bottomFloorPosition; // Ensure exact positioning
                     Lift_timer.Stop();
                     Up_button.Enabled = true;
+                    UpBtn.Enabled = true;
                     Down_Button.Enabled = false;
+                    DownBtn.Enabled = false;
                     isMovingDown = false;
                     current_floor = 0;
                     floorDisplayLabel.Text = "0";
@@ -316,7 +313,7 @@ namespace Lift_System
                         // Door fully opened
                         Door_timer.Stop();
                         Door_close.Enabled = true;
-                        Door_open.Enabled = false;  // Added this line
+                        Door_open.Enabled = false;  
                         isOpening = false;
                         OnLiftEvent?.Invoke("Ground floor doors fully opened");  // Added logging
                     }
@@ -356,7 +353,7 @@ namespace Lift_System
                         // Door fully opened
                         Door_timer.Stop();
                         Door_close.Enabled = true;
-                        Door_open.Enabled = false;  // Added this line
+                        Door_open.Enabled = false;  
                         isOpening = false;
                         OnLiftEvent?.Invoke("First floor doors fully opened");  // Added logging
                     }
@@ -374,7 +371,7 @@ namespace Lift_System
                         // Door fully closed
                         Door_timer.Stop();
                         Door_open.Enabled = true;
-                        Door_close.Enabled = false;  // Added this line
+                        Door_close.Enabled = false;
                         isClosing = false;
                         OnLiftEvent?.Invoke("First floor doors fully closed");  // Added logging
                     }
@@ -387,13 +384,12 @@ namespace Lift_System
             dbManager.DeleteLogsFromDB(dt);
             DataTable.Rows.Clear();
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void DownBtn_Click(object sender, EventArgs e)
         {
             LiftDown();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void UpBtn_Click(object sender, EventArgs e)
         {
             LiftUp();
         }

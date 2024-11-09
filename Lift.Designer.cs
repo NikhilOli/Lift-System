@@ -49,8 +49,8 @@
             DataTable = new DataGridView();
             DeleteButton = new Button();
             panel5 = new Panel();
-            button1 = new Button();
-            button2 = new Button();
+            DownBtn = new Button();
+            UpBtn = new Button();
             doorCheckTimer = new System.Windows.Forms.Timer(components);
             AutoCloseTimer = new System.Windows.Forms.Timer(components);
             doorCheckTimer2 = new System.Windows.Forms.Timer(components);
@@ -267,29 +267,29 @@
             panel5.Size = new Size(0, 0);
             panel5.TabIndex = 17;
             // 
-            // button1
+            // DownBtn
             // 
-            button1.BackColor = SystemColors.ActiveCaptionText;
-            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
-            button1.BackgroundImageLayout = ImageLayout.Stretch;
-            button1.Location = new Point(258, 116);
-            button1.Name = "button1";
-            button1.Size = new Size(38, 41);
-            button1.TabIndex = 19;
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            DownBtn.BackColor = SystemColors.ActiveCaptionText;
+            DownBtn.BackgroundImage = (Image)resources.GetObject("DownBtn.BackgroundImage");
+            DownBtn.BackgroundImageLayout = ImageLayout.Stretch;
+            DownBtn.Location = new Point(258, 116);
+            DownBtn.Name = "DownBtn";
+            DownBtn.Size = new Size(38, 41);
+            DownBtn.TabIndex = 19;
+            DownBtn.UseVisualStyleBackColor = false;
+            DownBtn.Click += DownBtn_Click;
             // 
-            // button2
+            // UpBtn
             // 
-            button2.BackColor = SystemColors.ActiveCaptionText;
-            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
-            button2.BackgroundImageLayout = ImageLayout.Stretch;
-            button2.Location = new Point(258, 472);
-            button2.Name = "button2";
-            button2.Size = new Size(38, 41);
-            button2.TabIndex = 20;
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            UpBtn.BackColor = SystemColors.ActiveCaptionText;
+            UpBtn.BackgroundImage = (Image)resources.GetObject("UpBtn.BackgroundImage");
+            UpBtn.BackgroundImageLayout = ImageLayout.Stretch;
+            UpBtn.Location = new Point(258, 472);
+            UpBtn.Name = "UpBtn";
+            UpBtn.Size = new Size(38, 41);
+            UpBtn.TabIndex = 20;
+            UpBtn.UseVisualStyleBackColor = false;
+            UpBtn.Click += UpBtn_Click;
             // 
             // floorDownDisplay
             // 
@@ -344,8 +344,8 @@
             Controls.Add(LogShowBtn);
             Controls.Add(floorUpDisplay);
             Controls.Add(floorDownDisplay);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(UpBtn);
+            Controls.Add(DownBtn);
             Controls.Add(panel5);
             Controls.Add(DeleteButton);
             Controls.Add(DataTable);
@@ -390,8 +390,8 @@
         private DataGridView DataTable;
         private Button DeleteButton;
         private Panel panel5;
-        private Button button1;
-        private Button button2;
+        private Button DownBtn;
+        private Button UpBtn;
         private Label floorDisplayLabel;
         private Panel panel2;
         private System.Windows.Forms.Timer doorCheckTimer;
